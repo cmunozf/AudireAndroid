@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "50336060752",
+    "firebase_url": "https://audire-e918b.firebaseio.com",
+    "project_id": "audire-e918b",
+    "storage_bucket": "audire-e918b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50336060752:android:bb677525ca450732",
+        "android_client_info": {
+          "package_name": "com.app.audireandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50336060752-mmbddov1h96p9er5i3kkb469acgqejd3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMs10gkwzOT0H-B-DR26tLzqeZb37HtJo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
