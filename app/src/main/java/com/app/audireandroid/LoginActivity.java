@@ -47,7 +47,7 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -84,8 +84,12 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
                     //progressBar6.setVisibility(View.VISIBLE);
                     // Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Datos.setCorreo(user.getEmail());
-                    Datos.setToken(user.getProviderId().toString());
-                    Toast.makeText(getBaseContext(),Datos.getCorreo()+Datos.getToken()+"",Toast.LENGTH_LONG).show();
+                    Datos.setToken(user.getUid().toString());
+                    //Toast.makeText(getBaseContext(),Datos.getCorreo()+"\n"+Datos.getToken()+"",Toast.LENGTH_LONG).show();
+
+                    Intent i = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(i);
+                    finish();
 
                 } else {
                     // User is signed out
@@ -183,6 +187,11 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
     @Override
     public void onStart() {
         super.onStart();
+
+        final boolean cerrarSesion = getIntent().getBooleanExtra("cerrarSesion",false);
+        if(cerrarSesion){
+            singOutGoogle();
+        }
 
         mAuth.addAuthStateListener(mAuthListener);
     }

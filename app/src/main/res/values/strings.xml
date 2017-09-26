@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Audire</string>
+    <string name="botonGoogle">Iniciar sesion mediante Google</string>
+    <string name="bSalir">Cerrar sesion de Audire</string>
+    <string name="bTomarFoto">Tomar fotografía y reproducir sonido</string>
+    <string name="bAnalizar">Analizar Fotografía</string>
 </resources>
