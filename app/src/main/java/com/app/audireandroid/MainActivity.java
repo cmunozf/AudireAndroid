@@ -17,6 +17,8 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -34,6 +36,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -67,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
     private CameraCaptureSession previewSession;
     Button getpicture;
 
+    public static ScrollView sc1;
+    public static TextView tv1;
+
+    public static Uri datos;
+    public static MediaPlayer mp;
+    public static int timeMp;
+
     private static final SparseIntArray ORIENTATIONS=new SparseIntArray();
     static
     {
@@ -84,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
         textureView.setSurfaceTextureListener(surfaceTextureListener);
         getpicture=(Button)findViewById(R.id.getpicture);
 
+
+        sc1=(ScrollView) findViewById(R.id.sc1);
+        tv1=(TextView) findViewById(R.id.tv1);
+
+
+
         /*getpicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,9 +111,21 @@ public class MainActivity extends AppCompatActivity {
         /*textureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPicture();
+                try{
+                    //mp.seekTo(timeMp);
+                    //mp.start();
+                }catch (Exception e){
+
+                }
             }
-        })*/
+        });*/
+
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(MainActivity.this, "Asd", Toast.LENGTH_SHORT).show();
+                timeMp = mp.getCurrentPosition();
+            }
+        });
 
     }
 
@@ -203,6 +232,20 @@ public class MainActivity extends AppCompatActivity {
                     {
                         outputStream=new FileOutputStream(file12);
                         outputStream.write(bytes);
+
+                        //Enviar foto
+                        Datos.url = "http://httpbin.org/post";
+                        Datos.file = file12.getAbsolutePath();
+                        Datos.fileName = file12.getName().replace(".jpg","");
+                        //sc1.setVisibility(View.VISIBLE);
+
+                        EnviarImg.Inicializar(getBaseContext());
+
+                        DescargarAudio.DescargarAudio1(getBaseContext());
+
+
+
+
                     }catch (Exception e)
                     {
                         e.printStackTrace();

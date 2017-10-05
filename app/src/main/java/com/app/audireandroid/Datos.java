@@ -6,6 +6,10 @@ package com.app.audireandroid;
 
 public class Datos {
 
+    public static String url = "";
+    public static String file = "";
+    public static String fileName = "";
+
     private static String correo = "";
     private static String token = "";
 
