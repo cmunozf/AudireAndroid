@@ -50,6 +50,10 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
+        Intent i = new Intent(getBaseContext(), MainActivity.class);
+        startActivity(i);
+        finish();
+
         mAuth = FirebaseAuth.getInstance();
 
         //Google

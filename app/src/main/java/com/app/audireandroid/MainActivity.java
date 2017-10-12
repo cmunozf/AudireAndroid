@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
     public static ScrollView sc1;
     public static TextView tv1;
 
-    public static Uri datos;
-    public static MediaPlayer mp;
-    public static int timeMp;
 
     private static final SparseIntArray ORIENTATIONS=new SparseIntArray();
     static
@@ -108,24 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        /*textureView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    //mp.seekTo(timeMp);
-                    //mp.start();
-                }catch (Exception e){
 
-                }
-            }
-        });*/
-
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            public void onCompletion(MediaPlayer mp) {
-                Toast.makeText(MainActivity.this, "Asd", Toast.LENGTH_SHORT).show();
-                timeMp = mp.getCurrentPosition();
-            }
-        });
 
     }
 
@@ -233,15 +213,17 @@ public class MainActivity extends AppCompatActivity {
                         outputStream=new FileOutputStream(file12);
                         outputStream.write(bytes);
 
+
+
                         //Enviar foto
-                        Datos.url = "http://httpbin.org/post";
+                        Datos.url = "https://fathomless-woodland-99127.herokuapp.com/music/new";
                         Datos.file = file12.getAbsolutePath();
                         Datos.fileName = file12.getName().replace(".jpg","");
                         //sc1.setVisibility(View.VISIBLE);
 
-                        EnviarImg.Inicializar(getBaseContext());
+                        Intent i = new Intent(MainActivity.this,SoundActivity.class);
+                        startActivity(i);
 
-                        DescargarAudio.DescargarAudio1(getBaseContext());
 
 
 

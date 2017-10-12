@@ -50,9 +50,20 @@ public class EnviarImg {
 
     public static Context context;
 
+    public static EnviarImgTask enviarImgTask;
+
     public static void Inicializar(Context context1){
         context = context1;
-        new EnviarImgTask().execute();
+        enviarImgTask = new EnviarImgTask();
+        enviarImgTask.execute();
+    }
+
+    public static void Cancelar(){
+        try{
+            enviarImgTask.cancel(true);
+        }catch (Exception e) {
+
+        }
     }
 
     static class EnviarImgTask extends AsyncTask<Void, String, String> {
@@ -68,7 +79,9 @@ public class EnviarImg {
         }
 
         protected void onPostExecute(String ab) {
-            //MainActivity.tv1.setText(ab);
+            //MainActivity.tv1.setText("Imagen Enviada");
+            Toast.makeText(context, "Imagen Enviada", Toast.LENGTH_LONG).show();
+            //MainActivity.tv1.setText(ab+"asdasdasd");
             //Toast.makeText(context, ab, Toast.LENGTH_LONG).show();
         }
     }

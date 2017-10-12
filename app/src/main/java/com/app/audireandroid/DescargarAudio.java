@@ -20,11 +20,21 @@ import java.net.URLConnection;
 public class DescargarAudio {
 
     public static Context context;
-
+    public static DownloadFile downloadFile;
     public static void DescargarAudio1(Context context1){
         context = context1;
-        new DownloadFile().execute();
+        downloadFile = new DownloadFile();
+        downloadFile.execute();
     }
+
+    public static void Cancelar(){
+        try{
+            downloadFile.cancel(true);
+        }catch (Exception e) {
+
+        }
+    }
+
 
     static class DownloadFile extends AsyncTask<String, Integer, String> {
         @Override
@@ -61,9 +71,7 @@ public class DescargarAudio {
         }
 
         protected void onPostExecute(String ab) {
-            MainActivity.datos = Uri.parse("/sdcard/Audire/"+Datos.fileName+".mp3");
-            MainActivity.mp = MediaPlayer.create(context, MainActivity.datos);
-            MainActivity.mp.start();
+            SoundActivity.Reproducir();
         }
     }
 }
