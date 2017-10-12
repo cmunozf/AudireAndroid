@@ -41,7 +41,7 @@ public class DescargarAudio {
         protected String doInBackground(String... url1) {
             int count;
             try {
-                URL url = new URL("http://satoshibutton.tk/sound.mp3");
+                URL url = new URL(Datos.linkAudio);
                 URLConnection conexion = url.openConnection();
                 conexion.connect();
                 // this will be useful so that you can show a tipical 0-100% progress bar

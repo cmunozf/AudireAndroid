@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //Enviar foto
-                        Datos.url = "https://fathomless-woodland-99127.herokuapp.com/music/new";
+                        Datos.url = "https://fathomless-woodland-99127.herokuapp.com/music/upload";
                         Datos.file = file12.getAbsolutePath();
                         Datos.fileName = file12.getName().replace(".jpg","");
                         //sc1.setVisibility(View.VISIBLE);

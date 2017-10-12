@@ -10,6 +10,8 @@ public class Datos {
     public static String file = "";
     public static String fileName = "";
 
+    public static String linkAudio = "";
+
     private static String correo = "";
     private static String token = "";
 

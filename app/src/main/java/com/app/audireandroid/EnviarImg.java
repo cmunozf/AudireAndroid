@@ -24,6 +24,7 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -73,15 +74,22 @@ public class EnviarImg {
 
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("image", Datos.file));
+            params.add(new BasicNameValuePair("upload", Datos.file));
             return post(Datos.url,params);
 
         }
 
         protected void onPostExecute(String ab) {
+            try{
+                JSONObject jobj = new JSONObject(ab);
+                Datos.linkAudio = jobj.get("file").toString();
+                Toast.makeText(context, "Imagen Enviada", Toast.LENGTH_LONG).show();
+            }catch (Exception e){
+                Toast.makeText(context, "Err: "+ e, Toast.LENGTH_LONG).show();
+            }
             //MainActivity.tv1.setText("Imagen Enviada");
-            Toast.makeText(context, "Imagen Enviada", Toast.LENGTH_LONG).show();
-            //MainActivity.tv1.setText(ab+"asdasdasd");
+
+            //MainActivity.tv1.setText(ab);
             //Toast.makeText(context, ab, Toast.LENGTH_LONG).show();
         }
     }
@@ -99,7 +107,7 @@ public class EnviarImg {
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
             for(int index=0; index < nameValuePairs.size(); index++) {
-                if(nameValuePairs.get(index).getName().equalsIgnoreCase("image")) {
+                if(nameValuePairs.get(index).getName().equalsIgnoreCase("upload")) {
                     // If the key equals to "image", we use FileBody to transfer the data
                     builder.addPart(nameValuePairs.get(index).getName(), new FileBody(new File (nameValuePairs.get(index).getValue())));
                 } else {
