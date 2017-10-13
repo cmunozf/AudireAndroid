@@ -66,7 +66,7 @@ public class SoundActivity extends AppCompatActivity {
                 }else
                     //Si se mueve hacia la izquierda
                     if(x-event.getX()>250){
-                        Toast.makeText(context,"Tomar Nueva Fotografia",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context,"Tomar Nueva Fotografia",Toast.LENGTH_LONG).show();
                         finish();
                     }
 
@@ -106,6 +106,15 @@ public class SoundActivity extends AppCompatActivity {
         EnviarImg.Cancelar();
         DescargarAudio.Cancelar();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mp.isPlaying()){
+            timeMp = mp.getCurrentPosition();
+            mp.pause();
+        }
     }
 
 

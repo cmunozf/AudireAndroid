@@ -25,6 +25,7 @@ import android.os.HandlerThread;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -346,6 +347,7 @@ public class MainActivity extends AppCompatActivity {
         public void onError(CameraDevice camera, int error) {
         }
     };
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -354,6 +356,20 @@ public class MainActivity extends AppCompatActivity {
             cameraDevice.close();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(cameraDevice!=null)
+        {
+            cameraDevice.close();
+            DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+            configureTransform(metrics.widthPixels,metrics.heightPixels);
+            startCamera();
+        }
+    }
+
     void  startCamera()
     {
         if(cameraDevice==null||!textureView.isAvailable()|| previewsize==null)
