@@ -3,6 +3,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -19,6 +21,7 @@ import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -40,6 +43,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -207,6 +212,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 void save(byte[] bytes)
                 {
+                    //En KB
+                    int size = (bytes.length)/ 1024;
+                    Bitmap bitmap;
+                    if(size>=2000){
+                        bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        int compressSize = (100*1900)/size;
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, compressSize, stream);
+                        bytes = stream.toByteArray();
+                    }
+
+
                     File file12=getOutputMediaFile();
                     OutputStream outputStream=null;
                     try
@@ -214,10 +232,7 @@ public class MainActivity extends AppCompatActivity {
                         outputStream=new FileOutputStream(file12);
                         outputStream.write(bytes);
 
-
-
                         //Enviar foto
-                        Datos.url = "https://fathomless-woodland-99127.herokuapp.com/music/upload";
                         Datos.file = file12.getAbsolutePath();
                         Datos.fileName = file12.getName().replace(".jpg","");
                         //sc1.setVisibility(View.VISIBLE);
@@ -290,6 +305,22 @@ public class MainActivity extends AppCompatActivity {
         }catch(Exception e){
 
         }
+    }
+
+    //https://stackoverflow.com/questions/16954109/reduce-the-size-of-a-bitmap-to-a-specified-size-in-android
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {

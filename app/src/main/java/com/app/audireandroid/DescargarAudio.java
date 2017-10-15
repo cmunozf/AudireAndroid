@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
@@ -65,13 +66,18 @@ public class DescargarAudio {
                 output.flush();
                 output.close();
                 input.close();
+                return "true";
             } catch (Exception e) {
+                return  e+"";
             }
-            return null;
         }
 
         protected void onPostExecute(String ab) {
-            SoundActivity.Reproducir();
+            if(ab.equals("true")){
+                SoundActivity.Reproducir();
+            }else {
+                Toast.makeText(context, ab, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

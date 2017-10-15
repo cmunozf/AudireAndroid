@@ -53,6 +53,8 @@ public class EnviarImg {
 
     public static EnviarImgTask enviarImgTask;
 
+    public static boolean error = false;
+
     public static void Inicializar(Context context1){
         context = context1;
         enviarImgTask = new EnviarImgTask();
@@ -69,23 +71,31 @@ public class EnviarImg {
 
     static class EnviarImgTask extends AsyncTask<Void, String, String> {
 
+        protected void onPreExecute() {
+            error = false;
+        }
+
         @Override
         protected String doInBackground(Void... arg0) {
 
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("upload", Datos.file));
-            return post(Datos.url,params);
+            String result = post(Datos.url,params);
+            if(!result.contains(".mp3")){
+                error = true;
+            }
+
+            return result;
 
         }
 
         protected void onPostExecute(String ab) {
-            try{
-                JSONObject jobj = new JSONObject(ab);
-                Datos.linkAudio = jobj.get("file").toString();
-                Toast.makeText(context, "Imagen Enviada", Toast.LENGTH_LONG).show();
-            }catch (Exception e){
-                Toast.makeText(context, "Err: "+ e, Toast.LENGTH_LONG).show();
+            if(error){
+                Toast.makeText(context, "Err: "+ ab, Toast.LENGTH_LONG).show();
+            }else{
+                Datos.linkAudio = ab;//jobj.get("file").toString();
+                Toast.makeText(context, "Link recibido: "+ab, Toast.LENGTH_LONG).show();
             }
             //MainActivity.tv1.setText("Imagen Enviada");
 
