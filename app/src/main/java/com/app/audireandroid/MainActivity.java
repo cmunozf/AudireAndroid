@@ -39,6 +39,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static ScrollView sc1;
     public static TextView tv1;
+
 
 
     private static final SparseIntArray ORIENTATIONS=new SparseIntArray();
@@ -215,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
                     //En KB
                     int size = (bytes.length)/ 1024;
                     Bitmap bitmap;
-                    if(size>=2000){
+                    if(size>400){
                         bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        int compressSize = (100*1900)/size;
+                        int compressSize = (100*400)/size;
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, compressSize, stream);

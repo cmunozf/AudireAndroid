@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 /**
@@ -26,6 +28,8 @@ public class SoundActivity extends AppCompatActivity {
     public static Uri datos;
     public static int timeMp;
 
+    public static ProgressBar progressBar5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +37,13 @@ public class SoundActivity extends AppCompatActivity {
         context = this;
         mp = new MediaPlayer();
 
+        progressBar5 = (ProgressBar) findViewById(R.id.progressBar5);
+        progressBar5.setVisibility(View.GONE);
+
 
 
         EnviarImg.Inicializar(context);
-        DescargarAudio.DescargarAudio1(context);
+        //DescargarAudio.DescargarAudio1(context);
 
     }
 

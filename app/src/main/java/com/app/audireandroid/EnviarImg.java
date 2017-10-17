@@ -3,6 +3,7 @@ package com.app.audireandroid;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.internal.http.multipart.MultipartEntity;
@@ -96,6 +97,10 @@ public class EnviarImg {
             }else{
                 Datos.linkAudio = ab;//jobj.get("file").toString();
                 Toast.makeText(context, "Link recibido: "+ab, Toast.LENGTH_LONG).show();
+
+                DescargarAudio.DescargarAudio1(context);
+                SoundActivity.progressBar5.setVisibility(View.VISIBLE);
+                //SoundActivity.progressBar5.setProgress(1);
             }
             //MainActivity.tv1.setText("Imagen Enviada");
 

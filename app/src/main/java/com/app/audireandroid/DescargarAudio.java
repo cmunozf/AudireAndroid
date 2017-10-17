@@ -72,6 +72,12 @@ public class DescargarAudio {
             }
         }
 
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            SoundActivity.progressBar5.setProgress(values[0]);
+        }
+
         protected void onPostExecute(String ab) {
             if(ab.equals("true")){
                 SoundActivity.Reproducir();

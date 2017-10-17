@@ -44,4 +44,14 @@
         android:layout_alignBottom="@+id/imageView2"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar5"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:progress="0" />
+
 </RelativeLayout>
