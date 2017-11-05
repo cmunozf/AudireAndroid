@@ -91,9 +91,7 @@ public class DescargarAudio {
         protected void onPostExecute(String ab) {
             if(ab.equals("true")){
                 SoundActivity.descargaAudioFinalizada = true;
-                if(!SoundActivity.ttsFinalizado){
-                    SoundActivity.Reproducir();
-                }
+                SoundActivity.Reproducir();
             }else {
                 Toast.makeText(context, ab, Toast.LENGTH_SHORT).show();
             }
