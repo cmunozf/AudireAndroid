@@ -25,6 +25,7 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -92,14 +93,37 @@ public class EnviarImg {
         }
 
         protected void onPostExecute(String ab) {
+
+            String link = "";
+            String description = "";
+
             if(error){
                 Toast.makeText(context, "Err: "+ ab, Toast.LENGTH_LONG).show();
             }else{
-                Datos.linkAudio = ab;//jobj.get("file").toString();
-                Toast.makeText(context, "Link recibido: "+ab, Toast.LENGTH_LONG).show();
 
-                DescargarAudio.DescargarAudio1(context);
-                SoundActivity.progressBar5.setVisibility(View.VISIBLE);
+                try{
+                    JSONObject jobj = new JSONObject(ab);
+                    link = jobj.getString("link");
+                    description = jobj.getString("description");
+
+                    Datos.linkAudio = link;//jobj.get("file").toString();
+                    Toast.makeText(context, "Link recibido: "+link, Toast.LENGTH_LONG).show();
+
+                    //Primero reproducimos el texto
+                    SoundActivity.textoAReproducir = description;
+                    SoundActivity.ReproducirDescripcion();
+
+                    //Empezamos a descargar el Audio
+                    DescargarAudio.DescargarAudio1(context);
+
+
+                    SoundActivity.progressBar5.setVisibility(View.VISIBLE);
+
+                }catch (JSONException e){
+                    Toast.makeText(context, "Err JSON: "+ e, Toast.LENGTH_LONG).show();
+                }
+
+
                 //SoundActivity.progressBar5.setProgress(1);
             }
             //MainActivity.tv1.setText("Imagen Enviada");

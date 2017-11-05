@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static com.app.audireandroid.R.id.textView;
+
 /**
  * Created by Edercmf on 05/10/2017.
  */
@@ -22,7 +24,15 @@ public class DescargarAudio {
 
     public static Context context;
     public static DownloadFile downloadFile;
+
+    public static void DescargarDescripcion(Context context1){
+        context = context1;
+
+    }
+
     public static void DescargarAudio1(Context context1){
+
+        //Empezamos a descargar a Img
         context = context1;
         downloadFile = new DownloadFile();
         downloadFile.execute();
@@ -80,10 +90,16 @@ public class DescargarAudio {
 
         protected void onPostExecute(String ab) {
             if(ab.equals("true")){
-                SoundActivity.Reproducir();
+                SoundActivity.descargaAudioFinalizada = true;
+                if(!SoundActivity.ttsFinalizado){
+                    SoundActivity.Reproducir();
+                }
             }else {
                 Toast.makeText(context, ab, Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+
+
 }
