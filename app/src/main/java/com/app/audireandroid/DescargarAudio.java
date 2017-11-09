@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -13,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
 
 import static com.app.audireandroid.R.id.textView;
 
@@ -25,15 +28,36 @@ public class DescargarAudio {
     public static Context context;
     public static DownloadFile downloadFile;
 
+    //Espera para descargar audio
+    public static Handler handler = new Handler();
+
+    static int intentos = 0;
+
+    private static Runnable runnableDescargarAudio = new Runnable() {
+        @Override
+        public void run() {
+            if(intentos<=5){
+                intentos++;
+                handler.removeCallbacks(runnableDescargarAudio);
+                DescargarAudio1();
+            }else{
+                Toast.makeText(context,"Error, descargando melodia",Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
     public static void DescargarDescripcion(Context context1){
         context = context1;
-
     }
 
-    public static void DescargarAudio1(Context context1){
-
-        //Empezamos a descargar a Img
+    public static void EsperarTiempo(Context context1){
         context = context1;
+        handler.removeCallbacks(runnableDescargarAudio);
+        handler.postDelayed(runnableDescargarAudio,10000);
+    }
+
+    public static void DescargarAudio1(){
+        //Empezamos a descargar a Img
         downloadFile = new DownloadFile();
         downloadFile.execute();
     }
@@ -89,11 +113,13 @@ public class DescargarAudio {
         }
 
         protected void onPostExecute(String ab) {
+
             if(ab.equals("true")){
                 SoundActivity.descargaAudioFinalizada = true;
                 SoundActivity.Reproducir();
             }else {
-                Toast.makeText(context, ab, Toast.LENGTH_SHORT).show();
+                handler.removeCallbacks(runnableDescargarAudio);
+                handler.postDelayed(runnableDescargarAudio,1000);
             }
         }
     }

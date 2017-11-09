@@ -1,5 +1,7 @@
 package com.app.audireandroid;
 
+import android.speech.tts.TextToSpeech;
+
 /**
  * Created by Edercmf on 13/09/2017.
  */
@@ -14,6 +16,10 @@ public class Datos {
 
     private static String correo = "";
     private static String token = "";
+
+
+    public static TextToSpeech tts;
+
 
     public static String getCorreo() {
         return correo;

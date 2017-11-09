@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
@@ -51,6 +52,25 @@ public class SoundActivity extends AppCompatActivity {
     public static boolean reproduciendoAudio = false;
     public static boolean ttsFinalizado = false;
 
+
+    //Guia
+    public static Handler handler = new Handler();
+
+    public static boolean guiaTerminada = false;
+
+    private static Runnable runnableGuiaTerminada = new Runnable() {
+        @Override
+        public void run() {
+            if(guiaTerminada){
+                handler.removeCallbacks(runnableGuiaTerminada);
+                ReproducirDescripcion();
+            }else{
+                handler.removeCallbacks(runnableGuiaTerminada);
+                handler.postDelayed(runnableGuiaTerminada,1000);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +103,12 @@ public class SoundActivity extends AppCompatActivity {
                         }else{
                             if(!reproduciendoDescripcion){
                                 speechDisp = true;
-                                ReproducirDescripcion();
+                                if(guiaTerminada){
+                                    ReproducirDescripcion();
+                                }else{
+                                    handler.removeCallbacks(runnableGuiaTerminada);
+                                    handler.postDelayed(runnableGuiaTerminada,1000);
+                                }
                             }
                         }
                     }
@@ -98,7 +123,6 @@ public class SoundActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
 
                                     public void run() {
-                                        Toast.makeText(getApplicationContext(),"Finaliza",Toast.LENGTH_LONG).show();
                                         ttsFinalizado = true;
                                         if(descargaAudioFinalizada) {
                                             Reproducir();
@@ -203,10 +227,10 @@ public class SoundActivity extends AppCompatActivity {
 
     public static void ReproducirDescripcion(){
         if(speechDisp) {
-            Toast.makeText(context,"Reproduciendo",Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,"Reproduciendo",Toast.LENGTH_LONG).show();
             reproduciendoDescripcion = true;
             tts.setLanguage(Locale.US);
-            tts.setSpeechRate(0.65f);
+            tts.setSpeechRate(0.55f);
             HashMap<String, String> params = new HashMap<String, String>();
             params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"id1234");
             tts.speak(textoAReproducir, TextToSpeech.QUEUE_FLUSH, params);
@@ -249,6 +273,19 @@ public class SoundActivity extends AppCompatActivity {
             tts.stop();
             tts.shutdown();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        guiaTerminada = false;
+        MainActivity.tts.setLanguage(Locale.US);
+        MainActivity.tts.setSpeechRate(0.55f);
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"id12345");
+        MainActivity.tts.speak("Please, slide to the left to go back and slide down to pause or resume the song", TextToSpeech.QUEUE_FLUSH, params);
+
     }
 
 

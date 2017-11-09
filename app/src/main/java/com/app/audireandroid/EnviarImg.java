@@ -84,7 +84,7 @@ public class EnviarImg {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("upload", Datos.file));
             String result = post(Datos.url,params);
-            if(!result.contains(".mp3")){
+            if(result.equals("")){
                 error = true;
             }
 
@@ -114,8 +114,10 @@ public class EnviarImg {
                     SoundActivity.ReproducirDescripcion();
 
                     //Empezamos a descargar el Audio
-                    DescargarAudio.DescargarAudio1(context);
+                    //DescargarAudio.DescargarAudio1(context);
 
+                    //Empezamos a esperar el tiempo para descargar el audio
+                    DescargarAudio.EsperarTiempo(context);
 
                     SoundActivity.progressBar5.setVisibility(View.VISIBLE);
 

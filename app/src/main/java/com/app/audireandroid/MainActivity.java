@@ -25,6 +25,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,6 +59,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.LogRecord;
 
 import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO;
@@ -81,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
     public static ScrollView sc1;
     public static TextView tv1;
 
+    public static TextToSpeech tts;
+
+    public static boolean ttsEnable = false;
 
 
     private static final SparseIntArray ORIENTATIONS=new SparseIntArray();
@@ -104,6 +110,67 @@ public class MainActivity extends AppCompatActivity {
         sc1=(ScrollView) findViewById(R.id.sc1);
         tv1=(TextView) findViewById(R.id.tv1);
 
+
+        tts=new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+
+            @Override
+            public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA ||
+                            result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("error", "This Language is not supported");
+                    } else {
+                        ttsEnable = true;
+                        Guia();
+                    }
+
+                    if (Build.VERSION.SDK_INT >= 15)
+                    {
+                        tts.setOnUtteranceProgressListener(new UtteranceProgressListener()
+                        {
+                            @Override
+                            public void onDone(String utteranceId)
+                            {
+                                runOnUiThread(new Runnable() {
+
+                                    public void run() {
+                                        //Toast.makeText(getBaseContext(),"True",Toast.LENGTH_LONG).show();
+                                        SoundActivity.guiaTerminada = true;
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError(String utteranceId)
+                            {
+
+                            }
+
+                            @Override
+                            public void onStart(String utteranceId)
+                            {
+                                SoundActivity.guiaTerminada = false;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        tts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener()
+                        {
+                            @Override
+                            public void onUtteranceCompleted(String utteranceId)
+                            {
+                                SoundActivity.guiaTerminada = true;
+                            }
+                        });
+                    }
+
+                } else
+                    Log.e("error", "Initilization Failed!");
+            }
+        });
 
 
         /*getpicture.setOnClickListener(new View.OnClickListener() {
@@ -242,10 +309,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(MainActivity.this,SoundActivity.class);
                         startActivity(i);
 
-
-
-
-
                     }catch (Exception e)
                     {
                         e.printStackTrace();
@@ -381,6 +444,13 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //TTS
+    public static void Guia(){
+        tts.setLanguage(Locale.US);
+        tts.setSpeechRate(0.55f);
+        tts.speak("Please, slide down to take a picture", TextToSpeech.QUEUE_FLUSH, null);
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -400,6 +470,10 @@ public class MainActivity extends AppCompatActivity {
             DisplayMetrics metrics = this.getResources().getDisplayMetrics();
             configureTransform(metrics.widthPixels,metrics.heightPixels);
             startCamera();
+        }
+
+        if(ttsEnable){
+            Guia();
         }
     }
 
