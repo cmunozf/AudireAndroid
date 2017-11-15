@@ -94,8 +94,11 @@ public class EnviarImg {
 
         protected void onPostExecute(String ab) {
 
+
             String link = "";
             String description = "";
+
+            //Toast.makeText(context,ab,Toast.LENGTH_LONG).show();
 
             if(error){
                 Toast.makeText(context, "Err: "+ ab, Toast.LENGTH_LONG).show();
@@ -106,8 +109,10 @@ public class EnviarImg {
                     link = jobj.getString("link");
                     description = jobj.getString("description");
 
-                    Datos.linkAudio = link;//jobj.get("file").toString();
-                    Toast.makeText(context, "Link recibido: "+link, Toast.LENGTH_LONG).show();
+                    Datos.linkAudio = "https://s3-us-west-1.amazonaws.com/audire-test-bucket/"+link.replace(":","%3A")+".wav";//jobj.get("file").toString();
+                    //Datos.linkAudio = "https://s3-us-west-1.amazonaws.com/audire-test-bucket/test.wav";//jobj.get("file").toString();
+
+                    //Toast.makeText(context, "Link recibido: "+Datos.linkAudio, Toast.LENGTH_LONG).show();
 
                     //Primero reproducimos el texto
                     SoundActivity.textoAReproducir = description;
@@ -122,7 +127,7 @@ public class EnviarImg {
                     SoundActivity.progressBar5.setVisibility(View.VISIBLE);
 
                 }catch (JSONException e){
-                    Toast.makeText(context, "Err JSON: "+ e, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Err JSON1: "+ e, Toast.LENGTH_LONG).show();
                 }
 
 

@@ -219,7 +219,7 @@ public class SoundActivity extends AppCompatActivity {
     public static void Reproducir(){
         if(ttsFinalizado && !reproduciendoAudio) {
             reproduciendoAudio = true;
-            datos = Uri.parse("/sdcard/Audire/" + Datos.fileName + ".mp3");
+            datos = Uri.parse("/sdcard/Audire/" + Datos.fileName + ".wav");
             mp = MediaPlayer.create(context, datos);
             mp.start();
         }
@@ -230,10 +230,10 @@ public class SoundActivity extends AppCompatActivity {
             //Toast.makeText(context,"Reproduciendo",Toast.LENGTH_LONG).show();
             reproduciendoDescripcion = true;
             tts.setLanguage(Locale.US);
-            tts.setSpeechRate(0.55f);
-            HashMap<String, String> params = new HashMap<String, String>();
-            params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"id1234");
-            tts.speak(textoAReproducir, TextToSpeech.QUEUE_FLUSH, params);
+            tts.setSpeechRate(0.80f);
+            //HashMap<String, String> params = new HashMap<String, String>();
+            //params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"id1234");
+            tts.speak(textoAReproducir, TextToSpeech.QUEUE_FLUSH,null);
         }
     }
 
@@ -281,7 +281,7 @@ public class SoundActivity extends AppCompatActivity {
 
         guiaTerminada = false;
         MainActivity.tts.setLanguage(Locale.US);
-        MainActivity.tts.setSpeechRate(0.55f);
+        MainActivity.tts.setSpeechRate(0.80f);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"id12345");
         MainActivity.tts.speak("Please, slide to the left to go back and slide down to pause or resume the song", TextToSpeech.QUEUE_FLUSH, params);

@@ -62,13 +62,14 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
         //startActivity(i);
         //finish();
 
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
 
         //Google
         bLoginGoogle = (SignInButton) findViewById(R.id.bSignIn);
 
         // Configure Google Sign In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+
+        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
@@ -76,17 +77,21 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
         mGoogleApiClient = new GoogleApiClient.Builder(getBaseContext())
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        mGoogleApiClient.connect();
+        mGoogleApiClient.connect();*/
 
         bLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                singOutGoogle();
-                revokeAccessGoogle();
-                signInGoogle();
+                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(i);
+                finish();
+                //singOutGoogle();
+                //revokeAccessGoogle();
+                //signInGoogle();
             }
         });
 
+        /*
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -111,6 +116,7 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
             }
         };
 
+*/
         comprobarPermiso1();
 
 
@@ -226,20 +232,20 @@ public class LoginActivity  extends AppCompatActivity implements GoogleApiClient
     public void onStart() {
         super.onStart();
 
-        final boolean cerrarSesion = getIntent().getBooleanExtra("cerrarSesion",false);
+        /*final boolean cerrarSesion = getIntent().getBooleanExtra("cerrarSesion",false);
         if(cerrarSesion){
             singOutGoogle();
-        }
+        }*/
 
-        mAuth.addAuthStateListener(mAuthListener);
+        //mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+        /*if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
-        }
+        }*/
     }
 
     @Override

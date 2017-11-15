@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.LogRecord;
@@ -131,13 +132,15 @@ public class MainActivity extends AppCompatActivity {
                         tts.setOnUtteranceProgressListener(new UtteranceProgressListener()
                         {
                             @Override
-                            public void onDone(String utteranceId)
+                            public void onDone(final String utteranceId)
                             {
                                 runOnUiThread(new Runnable() {
 
                                     public void run() {
-                                        //Toast.makeText(getBaseContext(),"True",Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(getBaseContext(),utteranceId,Toast.LENGTH_LONG).show();
                                         SoundActivity.guiaTerminada = true;
+
+
                                     }
                                 });
                             }
@@ -447,8 +450,8 @@ public class MainActivity extends AppCompatActivity {
     //TTS
     public static void Guia(){
         tts.setLanguage(Locale.US);
-        tts.setSpeechRate(0.55f);
-        tts.speak("Please, slide down to take a picture", TextToSpeech.QUEUE_FLUSH, null);
+        tts.setSpeechRate(0.80f);
+        tts.speak("Please, slide down to take a picture", TextToSpeech.QUEUE_FLUSH,null);
     }
 
     @Override
@@ -464,6 +467,10 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        if(ttsEnable){
+            Guia();
+        }
+        
         if(cameraDevice!=null)
         {
             cameraDevice.close();
@@ -472,9 +479,7 @@ public class MainActivity extends AppCompatActivity {
             startCamera();
         }
 
-        if(ttsEnable){
-            Guia();
-        }
+
     }
 
     void  startCamera()

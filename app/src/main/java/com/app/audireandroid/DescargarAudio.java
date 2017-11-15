@@ -36,7 +36,7 @@ public class DescargarAudio {
     private static Runnable runnableDescargarAudio = new Runnable() {
         @Override
         public void run() {
-            if(intentos<=5){
+            if(intentos<=7){
                 intentos++;
                 handler.removeCallbacks(runnableDescargarAudio);
                 DescargarAudio1();
@@ -84,7 +84,7 @@ public class DescargarAudio {
 
                 // downlod the file
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/Audire/"+Datos.fileName+".mp3");
+                OutputStream output = new FileOutputStream("/sdcard/Audire/"+Datos.fileName+".wav");
 
                 byte data[] = new byte[1024];
 
@@ -118,6 +118,7 @@ public class DescargarAudio {
                 SoundActivity.descargaAudioFinalizada = true;
                 SoundActivity.Reproducir();
             }else {
+                Toast.makeText(context,ab,Toast.LENGTH_LONG).show();
                 handler.removeCallbacks(runnableDescargarAudio);
                 handler.postDelayed(runnableDescargarAudio,1000);
             }
