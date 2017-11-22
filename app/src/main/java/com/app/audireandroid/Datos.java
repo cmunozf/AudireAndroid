@@ -8,7 +8,9 @@ import android.speech.tts.TextToSpeech;
 
 public class Datos {
 
-    public static String url = "https://fathomless-woodland-99127.herokuapp.com/music/upload";
+    //public static String url = "https://fathomless-woodland-99127.herokuapp.com/music/upload";
+    public static String url = "http://10.161.49.171:3000/music/upload";
+
 
     public static String file = "";
     public static String fileName = "";

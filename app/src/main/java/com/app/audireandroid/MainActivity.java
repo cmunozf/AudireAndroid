@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
     //TTS
     public static void Guia(){
         tts.setLanguage(Locale.US);
-        tts.setSpeechRate(0.80f);
+        tts.setSpeechRate(0.70f);
         tts.speak("Please, slide down to take a picture", TextToSpeech.QUEUE_FLUSH,null);
     }
 

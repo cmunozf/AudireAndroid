@@ -53,7 +53,7 @@ public class DescargarAudio {
     public static void EsperarTiempo(Context context1){
         context = context1;
         handler.removeCallbacks(runnableDescargarAudio);
-        handler.postDelayed(runnableDescargarAudio,10000);
+        handler.postDelayed(runnableDescargarAudio,2000);
     }
 
     public static void DescargarAudio1(){
@@ -84,7 +84,7 @@ public class DescargarAudio {
 
                 // downlod the file
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/Audire/"+Datos.fileName+".wav");
+                OutputStream output = new FileOutputStream("/sdcard/Audire/"+Datos.fileName+".mp3");
 
                 byte data[] = new byte[1024];
 
