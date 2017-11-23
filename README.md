@@ -1,4 +1,5 @@
 Librerías necesarias para su funcionamiento:
+	
 	- httpclient
 	- Se implementó la autenticación con Google usando la librería de Firebase pero esta se comentó en el código ya que no aportaba una mejora en el core de la aplicación.
 
