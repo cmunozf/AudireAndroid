@@ -5,9 +5,9 @@ Librerías necesarias para su funcionamiento:
 
 Como se está usando un servidor local se debe cambiar parte del código de la aplicación, ya que al momento de desplegar el BackEnd la dirección IP de este servidor cambia.
 
-	- Se debe tener instalado Android Studio. 
-	https://developer.android.com/studio/index.html?hl=es-419
+	- Se debe tener instalado Android Studio.
+	[Android Studio](https://developer.android.com/studio/index.html?hl=es-419)
 	- Se debe clonar el repositorio. 
-	https://github.com/cmunozf/AudireAndroid
+	[Github Android Studio](https://github.com/cmunozf/AudireAndroid)
 	- Se abre desde Android Studio el proyecto y se entra a la clase Datos.java , en esta de debe modificar en la variable url la nueva ip en la que está el BackEnd.
 	- Se hace el Build de la aplicación y se instala el apk generado.
