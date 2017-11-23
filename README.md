@@ -9,9 +9,9 @@ Como se está usando un servidor local se debe cambiar parte del código de la a
 
 ```
 - Se debe tener instalado Android Studio.
-[Android Studio] (https://developer.android.com/studio/index.html?hl=es-419)
+https://developer.android.com/studio/index.html?hl=es-419
 - Se debe clonar el repositorio Audire Android. 
-[Github Audire Andoid] (https://github.com/cmunozf/AudireAndroid)
+https://github.com/cmunozf/AudireAndroid
 - Se abre desde Android Studio el proyecto y se entra a la clase Datos.java , en esta de debe modificar en la variable url la nueva ip en la que está el BackEnd.
 - Se hace el Build de la aplicación y se instala el apk generado.
 ```
